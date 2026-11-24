@@ -19,7 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @category   Zend
@@ -27,15 +28,15 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Filter
  */
+#[Group('Zend_Filter')]
 class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
 {
     /**
-     * @group ZF-11267
      * If we pass in a validator instance that has a preset custom message, this
      * message should be used.
      */
+    #[Group('ZF-11267')]
     public function testIfCustomMessagesOnValidatorInstancesCanBeUsed()
     {
         // test with a Digits validator
@@ -72,8 +73,8 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
      * If setAllowEmpty(true) is called, all fields are optional, but fields with
      * a NotEmpty validator attached to them, should contain a non empty value.
      *
-     * @group ZF-9289
      */
+    #[Group('ZF-9289')]
     public function testAllowEmptyTrueRespectsNotEmtpyValidators()
     {
         $data = array(
@@ -169,7 +170,6 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
     }
 
     /**
-     * @group ZF-8446
      * The issue reports about nested error messages. This is to assure these do not occur.
      *
      * Example:
@@ -195,7 +195,8 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
      *          }
      *        }
      *      }
-    */
+     */
+    #[Group('ZF-8446')]
     public function testNoNestedMessageArrays()
     {
         $data = array(
@@ -226,9 +227,9 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertTrue(isset($messages['field1']['isEmpty']), 'oh no, we not even got the normally expected messages');
     }
 
-    /**
-     * @group ZF-11142, ZF-8446, ZF-9289
-     */
+    #[Group('ZF-11142')]
+    #[Group('ZF-8446')]
+    #[Group('ZF-9289')]
     public function testTwoValidatorsInChainShowCorrectError()
     {
         $validators = array(
@@ -631,10 +632,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @group ZF-6711
-     *
-     */
+    #[Group('ZF-6711')]
     public function testValidatorMultiFieldAllowEmptyProcessing()
     {
         $data = array(
@@ -763,10 +761,8 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("You must give a non-empty value for field 'field1'", current($messages['field1']));
     }
 
-    /**
-     * @group ZF-6708
-     * @group ZF-1912
-     */
+    #[Group('ZF-6708')]
+    #[Group('ZF-1912')]
     public function testValidatorAllowEmptyWithOtherValidatersProcessing()
     {
         $data = array(
@@ -791,9 +787,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("You must give a non-empty value for field 'field1'", current($messages['field1']));
     }
 
-    /**
-     * @group ZF-6708
-     */
+    #[Group('ZF-6708')]
     public function testValidatorShouldNotProcessZeroAsEmpty()
     {
         $validation = array(
@@ -930,9 +924,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('field8default', $input->field8, 'Expected field8 to be non-null');
     }
 
-    /**
-     * @group ZF-6761
-     */
+    #[Group('ZF-6761')]
     public function testValidatorMissingDefaults()
     {
         $validators = array(
@@ -1458,9 +1450,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testSetPluginLoader()
     {
         $input = new Zend_Filter_Input(null, null);
@@ -1971,9 +1961,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-3004
-     */
+    #[Group('ZF-3004')]
     public function testInsertingNullDoesNotGetEscapedWithDefaultEscapeMethod()
     {
         $input = new Zend_Filter_Input(null, null, array('test' => null));
@@ -1989,9 +1977,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertNull($input->test, 'magic get of test fails to return null');
     }
 
-    /**
-     * @group ZF-3100
-     */
+    #[Group('ZF-3100')]
     public function testPluginLoaderInputNamespaceWithSameNameFilterAndValidatorLeadsToException()
     {
         $filters = array(
@@ -2019,9 +2005,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-3100
-     */
+    #[Group('ZF-3100')]
     public function testPluginLoaderWithFilterValidateNamespaceWithSameNameFilterAndValidatorWorksPerfectly()
     {
         // Array
@@ -2062,9 +2046,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-7135
-     */
+    #[Group('ZF-7135')]
     public function testValidatorAllowNull()
     {
         $data = array(
@@ -2085,9 +2067,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertNull($input->field1);
     }
 
-    /**
-     * @group ZF-7034
-     */
+    #[Group('ZF-7034')]
     public function testSettingNotEmptyMessageAndMessagePerKeyAndMessagePerArray()
     {
         $filters    = array( );
@@ -2125,9 +2105,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertStringContainsString('Bitte beschränken Sie sich auf', $message['street']['stringLengthTooLong']);
     }
 
-    /**
-     * @group ZF-7394
-     */
+    #[Group('ZF-7394')]
     public function testSettingMultipleNotEmptyMessages()
     {
         $filters    = array( );
@@ -2152,9 +2130,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertStringContainsString('Please enter message contents', $message['content']['isEmpty']);
     }
 
-    /**
-     * @group ZF-3736
-     */
+    #[Group('ZF-3736')]
     public function testTranslateNotEmptyMessages()
     {
         $translator = new Zend_Translate_Adapter_Array(array('missingMessage' => 'Still missing'), 'en');
@@ -2176,9 +2152,7 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(array('Still missing'), $missing['rule1']);
     }
 
-    /**
-     * @group ZF-3736
-     */
+    #[Group('ZF-3736')]
     public function testTranslateNotEmptyMessagesByUsingRegistry()
     {
         $translator = new Zend_Translate_Adapter_Array(array('missingMessage' => 'Still missing'), 'en');
@@ -2207,8 +2181,8 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
      * If setAllowEmpty(true) is called, all fields are optional, but fields with
      * a NotEmpty validator attached to them, should contain a non empty value.
      *
-     * @group ZF-9289
      */
+    #[Group('ZF-9289')]
     public function testAllowEmptyTrueRespectsNotEmptyValidators()
     {
         $data = array(
@@ -2305,9 +2279,9 @@ class Zend_Filter_InputTest extends PHPUnit\Framework\TestCase
      * ensure that passing an empty array value into a $validators rule
      * doesn't cause a notice to be emitted
      *
-     * @group ZF-11819
-     * @doesNotPerformAssertions
      */
+    #[Group('ZF-11819')]
+    #[DoesNotPerformAssertions]
     public function testValidatorRuleCanHaveEmptyArrayAsMetacommandValue()
     {
         $validators = array(
